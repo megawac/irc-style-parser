@@ -7,33 +7,44 @@ This implementation should work consistently in near any environment (IE6+) and 
 
 Handles:
  - Unlimitted nesting
- - Colours (^C): Default outputs as
-	```html
-	<span class="back3"><span class="col3">message</span></span>
-	```
- - Underlines (^u): Default outputs as
-	```html
-	<span class="underline">message</span>
-	```
- - Italics (^i): Default outputs as
-	```html
-	<span class="italics">message</span>
-	```
- - Bold (^B): Default outputs as
-	```html
-	<span class="bold">message</span>
-	```
- - Normal (^o): Default outputs as
-	```html
-	<span class="">message</span>
-	```
- - Escaping (^0): E.g.
-	```js
-		ircStylize("^Bbolded part ^0 not bolded part");
-		// => "<span class="bold">bolded part </span> not bolded part"
-	```
+ - Colours (`^C`): Default outputs as
 
-**Note:** the ^C/^u/etc isn't used internally - we only replace the UTF8 versions of the string [see here](http://oreilly.com/pub/h/1953)
+```html
+<span class="back3"><span class="col3">message</span></span>
+```
+
+ - Underlines (`^u`): Default outputs as
+
+```html
+<span class="underline">message</span>
+```
+
+ - Italics (`^i`): Default outputs as
+
+```html
+<span class="italics">message</span>
+```
+
+ - Bold (`^B`): Default outputs as
+
+```html
+<span class="bold">message</span>
+```
+
+ - Normal (`^o`): Default outputs as
+
+```html
+<span class="">message</span>
+```
+
+ - Escaping (`^0`): E.g.
+
+```js
+ircStylize("^Bbolded part ^0 not bolded part");
+// => "<span class="bold">bolded part </span> not bolded part"
+```
+
+**Note:** the `^C`/`^u`/etc isn't used internally - we only replace the UTF8 versions of the string [see here](http://oreilly.com/pub/h/1953)
 
 Usage
 
