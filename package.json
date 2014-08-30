@@ -1,0 +1,28 @@
+{
+  "name": "irc-style-parser",
+  "version": "0.0.0",
+  "description": "Parser for IRC styles and colours in some IRC message",
+  "repository": "https://github.com/megawac/irc-style-parser",
+  "main": "index.js",
+  "scripts": {
+    "test": "prova test/**.js"
+  },
+  "keywords": [
+    "irc",
+    "irc-color",
+    "irc-colour",
+    "irc-style",
+    "color",
+    "style",
+    "colour"
+  ],
+  "author": "megawac (github.com/megawac)",
+  "license": "wtfpl",
+  "devDependencies": {
+    "cheerio": "~0.17.0",
+    "prova": "^1.14.0"
+  },
+  "dependencies": {
+    "underscore": "1.7.0"
+  }
+}
