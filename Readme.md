@@ -1,4 +1,4 @@
-IRC Style and Colour Parser
+IRC Style and Colour Parser [![License](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-1.png)](http://www.wtfpl.net/)
 ===========
 
 IRC Style parsing is ridiculously tricky as I found writing this for [qwebirc](https://github.com/megawac/qwebirc-enhancements). Besides the numerous edge cases, the spec is semi-ambigous (e.g. will the second x have a background in the string ``"^C1,2x^C3x"``?). This implementation follows the defacto implementations of mibbit and xchat -- however if you want options to handle particular cases cases differently make an issue.
