@@ -1,0 +1,143 @@
+/**
+  * IRC Message Styling
+  * https://github.com/megawac/irc-style-parser
+  */
+.irc-fg0 {
+    color: white;
+}
+
+.irc-fg1 {
+    color: black;
+}
+
+.irc-fg2 {
+    color: darkBlue;
+}
+
+.irc-fg3 {
+    color: darkGreen;
+}
+
+.irc-fg4 {
+    color: red;
+}
+
+.irc-fg5 {
+    color: darkRed;
+}
+
+.irc-fg6 {
+    color: purple;
+}
+
+.irc-fg7 {
+    color: orange;
+}
+
+.irc-fg8 {
+    color: yellow;
+}
+
+.irc-fg9 {
+    color: green;
+}
+
+.irc-fg10 {
+    color: teal;
+}
+
+.irc-fg11 {
+    color: cyan;
+}
+
+.irc-fg12 {
+    color: blue;
+}
+
+.irc-fg13 {
+    color: fuchsia;
+}
+
+.irc-fg14 {
+    color: dimGray;
+}
+
+.irc-fg15 {
+    color: lightGray;
+}
+
+.irc-bg0 {
+    background-color: white;
+}
+
+.irc-bg1 {
+    background-color: black;
+}
+
+.irc-bg2 {
+    background-color: darkBlue;
+}
+
+.irc-bg3 {
+    background-color: darkGreen;
+}
+
+.irc-bg4 {
+    background-color: red;
+}
+
+.irc-bg5 {
+    background-color: darkRed;
+}
+
+.irc-bg6 {
+    background-color: purple;
+}
+
+.irc-bg7 {
+    background-color: orange;
+}
+
+.irc-bg8 {
+    background-color: yellow;
+}
+
+.irc-bg9 {
+    background-color: green;
+}
+
+.irc-bg10 {
+    background-color: teal;
+}
+
+.irc-bg11 {
+    background-color: cyan;
+}
+
+.irc-bg12 {
+    background-color: blue;
+}
+
+.irc-bg13 {
+    background-color: fuchsia;
+}
+
+.irc-bg14 {
+    background-color: dimGray;
+}
+
+.irc-bg15 {
+    background-color: lightGray;
+}
+
+.irc-bold {
+    font-weight: bold;
+}
+
+.irc-underline {
+    text-decoration: underline;
+}
+
+.irc-italic {
+    font-style:italic
+}

@@ -10,25 +10,25 @@ Handles:
  - Colours (`^C`): Default outputs as
 
 ```html
-<span class="back3"><span class="col3">message</span></span>
+<span class="irc-bg3"><span class="irc-fg3">message</span></span>
 ```
 
  - Underlines (`^u`): Default outputs as
 
 ```html
-<span class="underline">message</span>
+<span class="irc-underline">message</span>
 ```
 
  - Italics (`^i`): Default outputs as
 
 ```html
-<span class="italics">message</span>
+<span class="irc-italics">message</span>
 ```
 
  - Bold (`^B`): Default outputs as
 
 ```html
-<span class="bold">message</span>
+<span class="irc-bold">message</span>
 ```
 
  - Normal (`^o`): Default outputs as

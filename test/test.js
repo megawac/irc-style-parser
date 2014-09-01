@@ -41,12 +41,12 @@ test("Matches foreground colours", function(t) {
 
     var msg = colourise("\x035some text\x03");
     t.equal(msg.length, 1);
-    t.equal($find(".col5", msg).text(), "some text");
+    t.equal($find(".irc-fg5", msg).text(), "some text");
 
     //shouldnt kill text outside
     msg = colourise("Some text \x035Keep space after\x03 outside");
     t.equal(msg.length, 3);
-    t.equal($find(".col5", msg).text(), "Keep space after");
+    t.equal($find(".irc-fg5", msg).text(), "Keep space after");
 });
 
 //background
@@ -54,8 +54,8 @@ test("Matches foreground+background", function(t) {
     t.plan(2);
 
     var msg = colourise("\x035,12coloured text and background\x03");
-    t.equal($find(".col5", msg).text(), "coloured text and background");
-    t.equal($find(".back12", msg).text(), "coloured text and background");
+    t.equal($find(".irc-fg5", msg).text(), "coloured text and background");
+    t.equal($find(".irc-bg12", msg).text(), "coloured text and background");
 });
 
 test("Isn't over eager with replacing", function(t) {
@@ -92,8 +92,8 @@ test("Matches multiple occurences of colours", function(t) {
     t.equal($(msg[1]).text(), "more coloured text and background");
 
     msg = colourise("\x033,5coloured text and background \x038other coloured text but same background\x03");
-    t.equal($find(".col3", msg).text(), "coloured text and background ");
-    t.equal($find(".col8", msg).text(), "other coloured text but same background");
+    t.equal($find(".irc-fg3", msg).text(), "coloured text and background ");
+    t.equal($find(".irc-fg8", msg).text(), "other coloured text but same background");
 
     msg = colourise("coloured \x033,5text and background \x038,7other coloured text and different\x03 background");
     t.equal(msg.length, 4);
@@ -112,7 +112,7 @@ test("Matches italic", function(t) {
 
     var msg = colourise("this is \x1Dsome text\x1D and some more text");
     t.equal(msg.length, 3);
-    t.equal($find(".italic", msg).length, 1);
+    t.equal($find(".irc-italic", msg).length, 1);
     t.equal(getText(msg), "this is some text and some more text");
 });
 
@@ -121,7 +121,7 @@ test("Matches bold", function(t) {
 
     var msg = colourise("this is \x02some text\x02 and some more text");
     t.equal(msg.length, 3);
-    t.equal($find(".bold", msg).length, 1);
+    t.equal($find(".irc-bold", msg).length, 1);
     t.equal(getText(msg), "this is some text and some more text");
 });
 
@@ -130,7 +130,7 @@ test("Matches underline", function(t) {
 
     var msg = colourise("this is \x1Fsome text\x1F and some more text");
     t.equal(msg.length, 3);
-    t.equal($find(".underline", msg).length, 1);
+    t.equal($find(".irc-underline", msg).length, 1);
     t.equal(getText(msg), "this is some text and some more text");
 });
 
@@ -139,9 +139,9 @@ test("Mixed styles and colours", function(t) {
 
     var msg = colourise("\x02this is \x1Fsome text\x1F and \x032,13Keep space after\x03 text\x02");
     t.equal(msg.length, 1);
-    t.equal($find(".bold", msg).length, 1);
-    t.equal($find(".underline", msg[0]).length, 1);
-    t.equal($find(".col2", msg[0]).text(), 'Keep space after');
+    t.equal($find(".irc-bold", msg).length, 1);
+    t.equal($find(".irc-underline", msg[0]).length, 1);
+    t.equal($find(".irc-fg2", msg[0]).text(), 'Keep space after');
 });
 
 test("^O breaks open styles and colours", function(t) {
@@ -149,13 +149,13 @@ test("^O breaks open styles and colours", function(t) {
 
     var msg = colourise("this is \x1Fsome text and\x0D some more\x1F text\x1F");
     t.equal(msg.length, 4);
-    t.equal($find(".underline", msg).length, 2);
+    t.equal($find(".irc-underline", msg).length, 2);
 
     msg = colourise("\x02this is \x1Fsome text and\x0D\x032,13Keep space after\x03 text\x02");
     //NOTE: that bold at the end will count as a span
     t.equal(msg.length, 4);
-    t.equal($find(".bold", msg).length, 2);
-    t.equal($find(".underline", msg).length, 1);
+    t.equal($find(".irc-bold", msg).length, 2);
+    t.equal($find(".irc-underline", msg).length, 1);
     t.equal($(msg[0]).text(), "this is some text and");
 });
 

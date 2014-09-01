@@ -75,7 +75,7 @@ var irc = module.exports = function stylize(line) { // more like stylize
     // Matching styles (italics/bold/underline)
     // if only colours were this easy...
     _.each(irc.styles.special, function(style) {
-        if (!result.contains(style.key)) return;
+        if (result.indexOf(style.key) < 0) return;
         result = result.replace(style.keyregex, function(match, text) {
             return irc.template({
                 "style": style.style,
@@ -90,139 +90,34 @@ var irc = module.exports = function stylize(line) { // more like stylize
 
 irc.template = _.template("<span class='<%= style %>'><%= text %></span>");
 
-irc.styles = [
-    {
-        name: "normal",
-        style: "",
-        key: "\x00",
-        keyregex: /\x00(.*?)(\x00|$)/
-    },
-    {
-        name: "underline",
-        style: "underline",
-        key: "\x1F",
-        keyregex: /\x1F(.*?)(\x1F|$)/
-    },
-    {
-        name: "bold",
-        style: "bold",
-        key: "\x02",
-        keyregex: /\x02(.*?)(\x02|$)/
-    },
-    {
-        name: "italic",
-        style: "italic",
-        key: "\x1D",
-        keyregex: /\x1D(.*?)(\x1D|$)/
-    },
-    {
+irc.styles = {
+    colour: {
         name: "colour",
         style: "", //see below
-        key: "\x03",
-        fore_re: /^(\d{1,2})/,
-        back_re: /^((\d{1,2}),(\d{1,2}))/
-    }
-];
-
-irc.styles.special = irc.styles.slice(0, 4);
-irc.styles.colour = irc.styles[4];
-
-//http://www.mirc.com/colors.html
-irc.colours = {
-    0: {
-        name: "white",
-        fore: "col0",
-        back: "back0",
-        key: 0
-    },
-    1: {
-        name: "black",
-        fore: "col1",
-        back: "back1",
-        key: 1
-    },
-    2: {
-        name: "navy",
-        fore: "col2",
-        back: "back2",
-        key: 2
-    },
-    3: {
-        name: "green",
-        fore: "col3",
-        back: "back3",
-        key: 3
-    },
-    4: {
-        name: "red",
-        fore: "col4",
-        back: "back4",
-        key: 4
-    },
-    5: {
-        name: "brown",
-        fore: "col5",
-        back: "back5",
-        key: 5
-    },
-    6: {
-        name: "purple",
-        fore: "col6",
-        back: "back6",
-        key: 6
-    },
-    7: {
-        name: "olive",
-        fore: "col7",
-        back: "back7",
-        key: 7
-    },
-    8: {
-        name: "yellow",
-        fore: "col8",
-        back: "back8",
-        key: 8
-    },
-    9: {
-        name: "lightgreen",
-        fore: "col9",
-        back: "back9",
-        key: 9
-    },
-    10: {
-        name: "teal",
-        fore: "col10",
-        back: "back10",
-        key: 10
-    },
-    11: {
-        name: "cyan",
-        fore: "col11",
-        back: "back11",
-        key: 11
-    },
-    12: {
-        name: "blue",
-        fore: "col12",
-        back: "back12",
-        key: 12
-    },
-    13: {
-        name: "pink",
-        fore: "col13",
-        back: "back13",
-        key: 13
-    },
-    14: {
-        name: "gray",
-        fore: "col14",
-        back: "back14",
-        key: 14
-    },
-    15: {
-        name: "lightgrey",
-        fore: "col15",
-        back: "back15",
-        key: 15
+        key: "\x03"
     }
 };
+
+irc.styles.special = _.map([["normal", "\x00", ""], ["underline", "\x1F"], ["bold", "\x02"], ["italic", "\x1D"]], function(style) {
+    var escaped = encodeURI(style[1]).replace("%", "\\x");
+    return (irc.styles[style[0]] = {
+        name: style[0],
+        style: style[2] != null ? style[2] : "irc-" + style[0],
+        key: style[1],
+        keyregex: new RegExp(escaped + "(.*?)(" + escaped + "|$)")
+    });
+});
+
+//http://www.mirc.com/colors.html
+irc.colours = _.reduce(["white", "black", "navy", "green", "red", "brown",
+                        "purple", "olive", "yellow", "lightgreen", "teal",
+                        "cyan", "blue", "pink", "gray", "lightgrey"],
+    function(memo, name, index) {
+    memo[index] = {
+        name: name,
+        fore: "irc-fg" + index,
+        back: "irc-bg" + index,
+        key: index
+    };
+    return memo;
+}, {});
