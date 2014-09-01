@@ -41,7 +41,7 @@ Handles:
 
 ```js
 ircStylize("^Bbolded part ^0 not bolded part");
-// => "<span class="bold">bolded part </span> not bolded part"
+// => "<span class="irc-bold">bolded part </span> not bolded part"
 ```
 
 **Note:** the `^C`/`^u`/etc isn't used internally - we only replace the UTF8 versions of the string [see here](http://oreilly.com/pub/h/1953)
