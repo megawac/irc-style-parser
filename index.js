@@ -7,7 +7,7 @@ var _ = require("underscore");
 
 var styleCheck_Re = /[\x00-\x1F]/,
     back_re = /^(\d{1,2})(,(\d{1,2}))?/,
-    colourKey = "\x03",
+    colourKey = "\x03", colour_re = /\x03/g,
     // breaks all open styles ^O (\x0D)
     styleBreak = "\x0D";
 
@@ -22,7 +22,7 @@ var irc = module.exports = function stylize(line) { // more like stylize
 
     // split up by the irc style break character ^O
     if (line.indexOf(styleBreak) >= 0) {
-        return line.split(styleBreak).map(stylize).join("");
+        return _.map(line.split(styleBreak), stylize).join("");
     }
 
     var result = line;
@@ -85,7 +85,7 @@ var irc = module.exports = function stylize(line) { // more like stylize
     });
 
     //replace the reminent colour terminations and be done with it
-    return result.replace(/\x03/g, "");
+    return result.replace(colour_re, "");
 };
 
 irc.template = _.template("<span class='<%= style %>'><%= text %></span>");
@@ -93,12 +93,13 @@ irc.template = _.template("<span class='<%= style %>'><%= text %></span>");
 irc.styles = {
     colour: {
         name: "colour",
-        style: "", //see below
-        key: "\x03"
+        key: colourKey
     }
 };
 
-irc.styles.special = _.map([["normal", "\x00", ""], ["underline", "\x1F"], ["bold", "\x02"], ["italic", "\x1D"]], function(style) {
+irc.styles.special = _.map([["normal", "\x00", ""], ["underline", "\x1F"],
+                            ["bold", "\x02"], ["italic", "\x1D"]],
+                            function(style) {
     var escaped = encodeURI(style[1]).replace("%", "\\x");
     return (irc.styles[style[0]] = {
         name: style[0],
