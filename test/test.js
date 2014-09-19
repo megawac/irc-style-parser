@@ -58,6 +58,14 @@ test("Matches foreground+background", function(t) {
     t.equal($find(".irc-bg12", msg).text(), "coloured text and background");
 });
 
+test("Correctly parses colours prefixed with a 0", function(t) {
+    t.plan(2);
+
+    var msg = colourise("\x0301,02prefixed text\x03");
+    t.equal($find(".irc-fg1", msg).text(), "prefixed text");
+    t.equal($find(".irc-bg2", msg).text(), "prefixed text");
+});
+
 test("Isn't over eager with replacing", function(t) {
     t.plan(3);
 

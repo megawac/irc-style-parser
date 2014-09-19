@@ -51,20 +51,20 @@ var irc = module.exports = function stylize(line) { // more like stylize
 
             // set the background colour
             // we set this seperate from the fore to allow for nesting
-            if (isFinite(background) && irc.colours[background]) {
+            if (isFinite(background) && irc.colours[+background]) {
                 var wrapStr = colourarr.slice(index).join(colourKey);
                     textIndex = colour.length + background.length + 1;
                 str = colour + str.slice(textIndex);
                 result = result.replace(colourKey + wrapStr, irc.template({
-                    style: irc.colours[background].back,
+                    style: irc.colours[+background].back,
                     text: colourKey + colour + wrapStr.slice(textIndex)
                 }));
             }
 
             // set the fore colour
-            if (irc.colours[colour]) {
+            if (irc.colours[+colour]) {
                 result = result.replace(colourKey + str, irc.template({
-                    "style": irc.colours[colour].fore,
+                    "style": irc.colours[+colour].fore,
                     "text": str.slice(colour.length)
                 }));
             }

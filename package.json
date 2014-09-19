@@ -1,6 +1,6 @@
 {
   "name": "irc-style-parser",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Parser for IRC styles and colours in some IRC message",
   "repository": "https://github.com/megawac/irc-style-parser",
   "main": "index.js",
