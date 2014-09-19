@@ -66,6 +66,18 @@ test("Correctly parses colours prefixed with a 0", function(t) {
     t.equal($find(".irc-bg2", msg).text(), "prefixed text");
 });
 
+test("Correctly parses 0 vs empty string", function(t) {
+    t.plan(4);
+
+    var msg = colourise("\x030,0prefixed text\x03");
+    t.equal($find(".irc-fg0", msg).text(), "prefixed text");
+    t.equal($find(".irc-bg0", msg).text(), "prefixed text");
+
+    msg = colourise("\x030,prefixed text\x03");
+    t.equal($find(".irc-fg0", msg).text(), ",prefixed text");
+    t.equal($find(".irc-bg0", msg).text(), "");
+});
+
 test("Isn't over eager with replacing", function(t) {
     t.plan(3);
 
