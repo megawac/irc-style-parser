@@ -52,7 +52,7 @@ var irc = module.exports = function stylize(line) { // more like stylize
             // set the background colour
             // we set this seperate from the fore to allow for nesting
             if (irc.colours[+background]) {
-                var wrapStr = colourarr.slice(index).join(colourKey);
+                var wrapStr = colourarr.slice(index).join(colourKey),
                     textIndex = colour.length + background.length + 1;
                 str = colour + str.slice(textIndex);
                 result = result.replace(colourKey + wrapStr, irc.template({
