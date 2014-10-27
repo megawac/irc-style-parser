@@ -100,7 +100,22 @@ test("Supports nesting background colours", function(t) {
     t.plan(1);
 
     var msg = colourise("Text outside\x030,1some text \x035more text \x031final.\x03 no background");
-    t.equal($(msg[1]).text(), "some text more text final.");
+    t.equal($find(".irc-bg1", msg).text(), "some text more text final.");
+});
+
+test("Supports tricky case with multi nesting and colour ends", function(t) {
+    t.plan(5);
+
+    var msg = colourise("Text outside\x030,1some text \x035more text \x031final.\x03 \x031no background");
+
+    var finalP = $(".irc-fg1", msg);
+    var noBack = $(msg).filter(".irc-fg1");
+    t.equal(finalP.length, 1);
+    t.equal(noBack.length, 1);
+    t.equal(finalP.text(), "final.");
+    t.equal(noBack.text(), "no background");
+
+    t.equal($find(".irc-bg1", msg).text(), "some text more text final.");
 });
 
 test("Matches multiple occurences of colours", function(t) {
