@@ -22,59 +22,39 @@ var irc = module.exports = function stylize(line) { // more like stylize
 
     // split up by the irc style break character ^O
     if (line.indexOf(styleBreak) >= 0) {
-        return _.map(line.split(styleBreak), stylize).join("");
+        return line.split(styleBreak).map(stylize).join("");
     }
 
     var result = line;
 
-    var parseArr = _.compact(result.split(colourKey));
+    var parseArr = result.split(colourKey);
 
-    // Crude mapper for matching the start of a colour string to its end token
-    // Groups each colours into subarrays until the next ^C or background colour
-    var colouredarr = _.reduce(parseArr, function(memo, str) {
-        var match = str.match(back_re);
-        if (!match) { //^C1***
-            memo.push([]);
-        } else if (isFinite(match[3])) { // fore + background
-            memo.push([str]);
-        } else { // foreground only
-            _.last(memo).push(str);
+    var text, match, colour, background = "";
+    for (var i = 0; i < parseArr.length; i++) {
+        text = parseArr[i];
+        match = text.match(back_re);
+        colour = match && irc.colours[+match[1]];
+        if (!match || !colour) {
+            // ^C (no colour) ending. Escape current colour and carry on
+            background = "";
+            continue;
+        };
+        // set the background colour
+        // we don't overide the background local var to support nesting
+        if (irc.colours[+match[3]]) {
+            background = " " + irc.colours[+match[3]].back;
         }
-        return memo;
-    }, [[]]);
-
-    _.each(colouredarr, function(colourarr) {
-        _.each(colourarr, function(str, index) {
-            var match = str.match(back_re);
-            var colour = match[1];
-            var background = match[3];
-
-            // set the background colour
-            // we set this seperate from the fore to allow for nesting
-            if (irc.colours[+background]) {
-                var wrapStr = colourarr.slice(index).join(colourKey),
-                    textIndex = colour.length + background.length + 1;
-                str = colour + str.slice(textIndex);
-                result = result.replace(colourKey + wrapStr, irc.template({
-                    style: irc.colours[+background].back,
-                    text: colourKey + colour + wrapStr.slice(textIndex)
-                }));
-            }
-
-            // set the fore colour
-            if (irc.colours[+colour]) {
-                result = result.replace(colourKey + str, irc.template({
-                    "style": irc.colours[+colour].fore,
-                    "text": str.slice(colour.length)
-                }));
-            }
-        });
-    });
+        // update the parsed text result
+        result = result.replace(colourKey + text, irc.template({
+            style: colour.fore + background,
+            text: text.slice(match[0].length)
+        }));
+    }
 
 
     // Matching styles (italics/bold/underline)
     // if only colours were this easy...
-    _.each(irc.styles.special, function(style) {
+    irc.styles.special.forEach(function(style) {
         if (result.indexOf(style.key) < 0) return;
         result = result.replace(style.keyregex, function(match, text) {
             return irc.template({
