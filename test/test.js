@@ -87,13 +87,25 @@ test("Isn't over eager with replacing", function(t) {
     t.equal($(msg[2]).text(), "xxx");
 });
 
-test("breaks out of colour on ^3 character", function(t) {
+test("breaks out of colour on ^C character", function(t) {
     t.plan(3);
 
     var msg = colourise("Text outside\x030,1some text.\x03 no background");
     t.equal(msg.length, 3);
     t.equal($(msg[1]).text(), "some text.");
     t.equal(getText(msg), "Text outsidesome text. no background");
+});
+
+test("stupid open close ^C{col}^C", function(t) {
+    var msg = colourise("Text outside\x030,1\x03some text.\x0315\x03 no background");
+    _.chain(msg)
+    .filter(function(val) {
+        return val.type === "tag";
+    })
+    .each(function(val) {
+        t.equal($(val).text(), "");
+    });
+    t.end();
 });
 
 test("Supports nesting background colours", function(t) {
