@@ -21,9 +21,9 @@
   "devDependencies": {
     "cheerio": "~0.17.0",
     "jshint": "^2.5.5",
-    "prova": "^1.14.0"
+    "prova": "^1.14.0",
+    "underscore": "1.7.0"
   },
   "dependencies": {
-    "underscore": "1.7.0"
   }
 }

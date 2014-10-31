@@ -3,8 +3,6 @@
  * Unfortuanately this is a non trivial operation
  * See https://github.com/megawac/irc-style-parser
  */
-var _ = require("underscore");
-
 var styleCheck_Re = /[\x00-\x1F]/,
     back_re = /^(\d{1,2})(,(\d{1,2}))?/,
     colourKey = "\x03", colour_re = /\x03/g,
@@ -26,9 +24,7 @@ var irc = module.exports = function stylize(line) { // more like stylize
     }
 
     var result = line;
-
     var parseArr = result.split(colourKey);
-
     var text, match, colour, background = "";
     for (var i = 0; i < parseArr.length; i++) {
         text = parseArr[i];
@@ -51,10 +47,9 @@ var irc = module.exports = function stylize(line) { // more like stylize
         }));
     }
 
-
     // Matching styles (italics/bold/underline)
     // if only colours were this easy...
-    irc.styles.special.forEach(function(style) {
+    irc.styles.forEach(function(style) {
         if (result.indexOf(style.key) < 0) return;
         result = result.replace(style.keyregex, function(match, text) {
             return irc.template({
@@ -68,7 +63,9 @@ var irc = module.exports = function stylize(line) { // more like stylize
     return result.replace(colour_re, "");
 };
 
-irc.template = _.template("<span class='<%= style %>'><%= text %></span>");
+irc.template = function(settings) {
+    return "<span class='" + settings.style + "'>" + settings.text + "</span>";
+};
 
 irc.styles = {
     colour: {
@@ -77,23 +74,25 @@ irc.styles = {
     }
 };
 
-irc.styles.special = _.map([["normal", "\x00", ""], ["underline", "\x1F"],
-                            ["bold", "\x02"], ["italic", "\x1D"]],
-                            function(style) {
+irc.styles = [
+    ["normal", "\x00", ""], ["underline", "\x1F"],
+    ["bold", "\x02"], ["italic", "\x1D"]
+].map(function(style) {
     var escaped = encodeURI(style[1]).replace("%", "\\x");
-    return (irc.styles[style[0]] = {
+    return {
         name: style[0],
         style: style[2] != null ? style[2] : "irc-" + style[0],
         key: style[1],
         keyregex: new RegExp(escaped + "(.*?)(" + escaped + "|$)")
-    });
+    };
 });
 
 //http://www.mirc.com/colors.html
-irc.colours = _.reduce(["white", "black", "navy", "green", "red", "brown",
-                        "purple", "olive", "yellow", "lightgreen", "teal",
-                        "cyan", "blue", "pink", "gray", "lightgrey"],
-    function(memo, name, index) {
+irc.colours = [
+    "white", "black", "navy", "green", "red", "brown",
+    "purple", "olive", "yellow", "lightgreen", "teal",
+    "cyan", "blue", "pink", "gray", "lightgrey"
+].reduce(function(memo, name, index) {
     memo[index] = {
         name: name,
         fore: "irc-fg" + index,
