@@ -3,7 +3,7 @@ IRC Style and Colour Parser [![License](http://www.wtfpl.net/wp-content/uploads/
 
 IRC Style parsing is ridiculously tricky as I found writing this for [qwebirc](https://github.com/megawac/qwebirc-enhancements). Besides the numerous edge cases, the spec is semi-ambigous (e.g. will the second x have a background in the string ``"^C1,2x^C3x"``?). This implementation follows the defacto implementations of mibbit and xchat -- however if you want options to handle particular cases cases differently make an issue.
 
-This implementation should work consistently in near any environment (IE6+) and is [well tested](test/test.js)
+This implementation should work consistently in near any environment (IE6+) [with an [es5 array method shim](https://github.com/es-shims/es5-shim)] and is [well tested](test/test.js)
 
 Handles:
  - Unlimitted nesting
@@ -61,6 +61,5 @@ var $parsed = jQuery(ircStylize(msg));
 ```
 
 Todo
-- Drop underscore dependency
-- Clean up styles
-- Make it easier to add/change a colour
+[ ] Make it easier to add/change a colour
+[ ] Remove ES5 dependency?

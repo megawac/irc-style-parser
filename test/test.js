@@ -116,16 +116,14 @@ test("Supports nesting background colours", function(t) {
 });
 
 test("Supports tricky case with multi nesting and colour ends", function(t) {
-    t.plan(5);
+    t.plan(4);
 
     var msg = colourise("Text outside\x030,1some text \x035more text \x031final.\x03 \x031no background");
 
-    var finalP = $(".irc-fg1", msg);
-    var noBack = $(msg).filter(".irc-fg1");
-    t.equal(finalP.length, 1);
-    t.equal(noBack.length, 1);
-    t.equal(finalP.text(), "final.");
-    t.equal(noBack.text(), "no background");
+    var fg1 = $(".irc-fg1", msg).add($(msg).filter(".irc-fg1"));
+    t.equal(fg1.length, 2);
+    t.equal($(fg1[0]).text(), "final.");
+    t.equal($(fg1[1]).text(), "no background");
 
     t.equal($find(".irc-bg1", msg).text(), "some text more text final.");
 });
