@@ -192,11 +192,11 @@ test("Mixed styles and colours", function(t) {
 test("^O breaks open styles and colours", function(t) {
     t.plan(6);
 
-    var msg = colourise("this is \x1Fsome text and\x0D some more\x1F text\x1F");
+    var msg = colourise("this is \x1Fsome text and\x0F some more\x1F text\x1F");
     t.equal(msg.length, 4);
     t.equal($find(".irc-underline", msg).length, 2);
 
-    msg = colourise("\x02this is \x1Fsome text and\x0D\x032,13Keep space after\x03 text\x02");
+    msg = colourise("\x02this is \x1Fsome text and\x0F\x032,13Keep space after\x03 text\x02");
     //NOTE: that bold at the end will count as a span
     t.equal(msg.length, 4);
     t.equal($find(".irc-bold", msg).length, 2);
@@ -207,8 +207,8 @@ test("^O breaks open styles and colours", function(t) {
 test("Catches ^0 at start and end", function(t) {
     t.plan(2);
 
-    t.equal(ircStylize("\x0Dtext"), "text");
-    t.equal(ircStylize("text\x0D"), "text");
+    t.equal(ircStylize("\x0Ftext"), "text");
+    t.equal(ircStylize("text\x0F"), "text");
 });
 
 test("Don't require end signal", function(t) {

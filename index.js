@@ -6,12 +6,12 @@
 var styleCheck_Re = /[\x00-\x1F]/,
     back_re = /^(\d{1,2})(,(\d{1,2}))?/,
     colourKey = "\x03", colour_re = /\x03/g,
-    // breaks all open styles ^O (\x0D)
-    styleBreak = "\x0D";
+    // breaks all open styles ^O (\x0F)
+    styleBreak = "\x0F";
 
 var irc = module.exports = function stylize(line) { // more like stylize
     // http://www.mirc.com/colors.html
-    // http://www.aviran.org/2011/12/stripremove-irc-client-control-characters/
+    // http://www.aviran.org/stripremove-irc-client-control-characters/
     // https://github.com/perl6/mu/blob/master/examples/rules/Grammar-IRC.pm
     // regexs are cruel to parse this thing
 
