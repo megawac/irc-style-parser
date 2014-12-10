@@ -34,7 +34,7 @@ var irc = module.exports = function stylize(line) { // more like stylize
             // ^C (no colour) ending. Escape current colour and carry on
             background = "";
             continue;
-        };
+        }
         // set the background colour
         // we don't overide the background local var to support nesting
         if (irc.colours[+match[3]]) {
