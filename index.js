@@ -6,7 +6,7 @@
 
 var regex = {
     color: /\003([0-9]{1,2})[,]?([0-9]{1,2})?([^\003]+)/,
-    terminator: /\x0D/,
+    terminator: /\x0F/,
     styles: [
         [/\002([^\002]+)(\002)?/, ["<span class='bold'>", "</span>"]],
         [/\037([^\037]+)(\037)?/, ["<span class='underline'>", "</span>"]]
