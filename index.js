@@ -67,13 +67,6 @@ irc.template = function(settings) {
     return "<span class='" + settings.style + "'>" + settings.text + "</span>";
 };
 
-irc.styles = {
-    colour: {
-        name: "colour",
-        key: colourKey
-    }
-};
-
 irc.styles = [
     ["normal", "\x00", ""], ["underline", "\x1F"],
     ["bold", "\x02"], ["italic", "\x1D"]
@@ -88,16 +81,10 @@ irc.styles = [
 });
 
 //http://www.mirc.com/colors.html
-irc.colours = [
-    "white", "black", "navy", "green", "red", "brown",
-    "purple", "olive", "yellow", "lightgreen", "teal",
-    "cyan", "blue", "pink", "gray", "lightgrey"
-].reduce(function(memo, name, index) {
-    memo[index] = {
-        name: name,
-        fore: "irc-fg" + index,
-        back: "irc-bg" + index,
-        key: index
+irc.colours = {};
+for (var colour = 0; colour < 16; colour++) {
+    irc.colours[colour] = {
+        fore: "irc-fg" + colour,
+        back: "irc-bg" + colour
     };
-    return memo;
-}, {});
+}
