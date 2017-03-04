@@ -76,7 +76,7 @@ irc.styles = [
         name: style[0],
         style: style[2] != null ? style[2] : "irc-" + style[0],
         key: style[1],
-        keyregex: new RegExp(escaped + "(.*?)(" + escaped + "|$)")
+        keyregex: new RegExp(escaped + "(.*?)(" + escaped + "|$)", "g")
     };
 });
 

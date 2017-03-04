@@ -170,6 +170,15 @@ test("Matches bold", function(t) {
     t.equal(getText(msg), "this is some text and some more text");
 });
 
+test("Matches multiple bold", function(t) {
+    t.plan(3);
+
+    var msg = colourise("this is \x02some\x02 \x02text\x02 \x02and\x02 \x02some\x02 more \x02text\x02");
+    t.equal(msg.length, 10);
+    t.equal($find(".irc-bold", msg).length, 5);
+    t.equal(getText(msg), "this is some text and some more text");
+});
+
 test("Matches underline", function(t) {
     t.plan(3);
 
